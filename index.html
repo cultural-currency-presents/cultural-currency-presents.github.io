@@ -9,6 +9,26 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .fixed-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/user-attachments/assets/4c8e472f-e9c1-4c3a-8a4f-dcdbfba7498f');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: 0;
+        }
+        
         @keyframes spin-slow {
             0% { transform: rotateY(0deg); }
             100% { transform: rotateY(360deg); }
@@ -84,6 +104,9 @@
     </style>
 </head>
 <body>
+    <!-- Fixed Background -->
+    <div class="fixed-background"></div>
+    
     <div id="root"></div>
 
     <script type="text/babel">
@@ -99,10 +122,8 @@
             };
 
             const handleSubmit = () => {
-                // Replace 'your-password' with your actual password
                 if (password === 'ccp2026') {
-                    // Redirect to your main content page
-                    window.location.href = '/main.html'; // Create this page with your current content
+                    window.location.href = '/main.html';
                 } else {
                     setError('Incorrect password');
                     setPassword('');
@@ -122,17 +143,9 @@
             };
 
             return (
-                <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
-                    {/* Background image - responsive for different devices */}
-                    <div 
-                        className="absolute inset-0 bg-cover bg-center md:bg-cover transition-all duration-500"
-                        style={{
-                            backgroundImage: 'url(https://github.com/user-attachments/assets/4c8e472f-e9c1-4c3a-8a4f-dcdbfba7498f)',
-                            backgroundPosition: 'center center',
-                        }}
-                    ></div>
+                <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
                     {/* Blur and dark overlay for contrast */}
-                    <div className="absolute inset-0 backdrop-blur-sm bg-black/50"></div>
+                    <div className="fixed inset-0 backdrop-blur-sm bg-black/50 z-0"></div>
                     
                     {/* Main content */}
                     <div className="relative z-10 flex flex-col items-center">
