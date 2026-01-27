@@ -88,44 +88,55 @@
         .socials a:hover { opacity: 0.6; }
 
         /* The Spinning Animation */
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
+        @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+        }
 
-/* Updated Logo Styling */
-.logo {
-    width: 120px; /* Slightly larger for detail */
-    height: 120px;
-    border-radius: 50%;
-    
-    /* Creating the 'Vinyl' look */
-    border: 4px solid #1a1a1a;
-    box-shadow: 0 0 0 2px #333, inset 0 0 10px rgba(0,0,0,0.5);
-    
-    margin-bottom: 20px;
-    object-fit: cover;
-    
-    /* Apply the animation: 8 seconds per rotation, linear, infinite */
-    animation: spin 8s linear infinite;
-}
+        /* Updated Logo Styling */
+        .logo {
+            width: 120px; /* Slightly larger for detail */
+            height: 120px;
+            border-radius: 50%;
+            
+            /* Creating the 'Vinyl' look */
+            border: 4px solid #1a1a1a;
+            box-shadow: 0 0 0 2px #333, inset 0 0 10px rgba(0,0,0,0.5);
+            
+            margin-bottom: 20px;
+            object-fit: cover;
+            
+            /* Apply the animation: 8 seconds per rotation, linear, infinite */
+            animation: spin 8s linear infinite;
+        }
+        
+        /* DJ Interaction: Pause the record on hover */
+        .logo:hover {
+            animation-play-state: paused;
+            cursor: crosshair;
+            filter: brightness(1.2);
+        }
+        
+        /* Initial "Needle Drop" Fade In */
+        .wrapper {
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* DJ Interaction: Pause the record on hover */
-.logo:hover {
-    animation-play-state: paused;
-    cursor: crosshair;
-    filter: brightness(1.2);
-}
-
-/* Initial "Needle Drop" Fade In */
-.wrapper {
-    animation: fadeIn 1.5s ease-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        body::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: url('https://www.transparenttextures.com/patterns/stardust.png');
+        opacity: 0.05;
+        pointer-events: none;
+        z-index: 1;
+    }
     </style>
 </head>
 <body>
