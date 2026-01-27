@@ -3,249 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cultural Currency Presents</title>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Cultural Currency | Links</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --bg-black: #050505;
+            --accent-gold: #d4af37; /* Optional accent color for 'premium' feel */
+            --text-white: #ffffff;
+            --button-bg: rgba(255, 255, 255, 0.08);
+            --button-hover: rgba(255, 255, 255, 0.15);
+        }
+
         body {
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
         }
-        
-        .fixed-background {
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        .wrapper {
             width: 100%;
-            height: 100%;
-            background-image: url('ccp-speakeasy.png');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            z-index: 0;
+            max-width: 450px;
+            padding: 40px 20px;
+            text-align: center;
         }
-        
-        @keyframes spin-slow {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
+
+        .logo {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 2px solid var(--text-white);
+            margin-bottom: 15px;
         }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+
+        h1 { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; }
+        p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 30px; }
+
+        /* Link Buttons */
+        .btn-list { display: flex; flex-direction: column; gap: 16px; }
+        .btn {
+            background: var(--button-bg);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text-white);
+            padding: 18px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .btn:hover {
+            background: var(--button-hover);
+            border-color: var(--text-white);
+            transform: translateY(-2px);
         }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        /* Signup Form */
+        .signup-section { margin-top: 50px; padding: 20px; border-top: 1px solid #222; }
+        .signup-form { display: flex; margin-top: 15px; }
+        .signup-form input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #333;
+            background: #111;
+            color: white;
+            border-radius: 4px 0 0 4px;
         }
-        
-        .animate-spin-slow {
-            animation: spin-slow 6s linear infinite;
+        .signup-form button {
+            padding: 12px 20px;
+            border: none;
+            background: var(--text-white);
+            color: black;
+            font-weight: bold;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
         }
-        
-        .animate-shimmer {
-            animation: shimmer 3s linear infinite;
-        }
-        
-        .animate-fadeIn {
-            animation: fadeIn 0.3s ease-out;
-        }
-        
-        .animate-slideUp {
-            animation: slideUp 0.3s ease-out;
-        }
-        
-        .perspective-1000 {
-            perspective: 1000px;
-        }
-        
-        .transform-style-3d {
-            transform-style: preserve-3d;
-        }
-        
-        .backface-hidden {
-            backface-visibility: hidden;
-        }
-        
-        .coin-texture {
-            box-shadow: 
-                inset 0 2px 4px rgba(255, 235, 180, 0.6),
-                inset 0 -2px 4px rgba(120, 60, 0, 0.4),
-                0 8px 24px rgba(0, 0, 0, 0.5),
-                0 4px 12px rgba(180, 120, 0, 0.3);
-        }
-        
-        .coin-text-shadow {
-            text-shadow: 
-                1px 1px 2px rgba(255, 220, 150, 0.8),
-                -1px -1px 2px rgba(80, 40, 0, 0.6),
-                0 2px 3px rgba(0, 0, 0, 0.3);
-        }
-        
-        .bg-gradient-radial {
-            background: radial-gradient(circle at center, #fcd34d, #f59e0b, #b45309);
-        }
+
+        /* Social Icons */
+        .socials { margin-top: 40px; font-size: 1.5rem; }
+        .socials a { color: var(--text-white); margin: 0 15px; transition: opacity 0.3s; }
+        .socials a:hover { opacity: 0.6; }
     </style>
 </head>
 <body>
-    <!-- Fixed Background -->
-    <div class="fixed-background"></div>
-    
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState } = React;
+    <div class="wrapper">
+        <img src="Images/ccp-logo-transparent.png" alt="Cultural Currency" class="logo">
+        <h1>Cultural Currency</h1>
+        <p>B-Sides & Deep Cuts Collective</p>
 
-        function CulturalCurrencyLanding() {
-            const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
-            const [password, setPassword] = useState('');
-            const [error, setError] = useState('');
+        <div class="btn-list">
+            <a href="https://open.spotify.com/playlist/58SeJSxjo0Fr0PFCVsskxu" class="btn">Spotify Playlists</a>
+            <a href="#" class="btn">Next Party RSVP</a>
+            <a href="#" class="btn">Contact Us</a>
+        </div>
 
-            const handleCoinClick = () => {
-                setShowPasswordPrompt(true);
-            };
+        <div class="signup-section">
+            <h3>Join the Guestlist</h3>
+            <form class="signup-form">
+                <input type="email" placeholder="email@example.com" required>
+                <button type="submit">SUBMIT</button>
+                <input type="hidden" name="_next" value="https://culturalcurrency.vip/thanks.html">
+                <input type="text" name="_gotcha" style="display:none">
+            </form>
+        </div>
 
-            const handleSubmit = () => {
-                if (password === 'ccp2026') {
-                    window.location.href = '/main.html';
-                } else {
-                    setError('Incorrect password');
-                    setPassword('');
-                }
-            };
+        <div class="socials">
+            <a href="https://open.spotify.com/user/1264699547"><i class="fab fa-spotify"></i></a>
+            <a href="https://www.instagram.com/culturalcurrencypresents/"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
 
-            const handleKeyPress = (e) => {
-                if (e.key === 'Enter') {
-                    handleSubmit();
-                }
-            };
-
-            const handleClose = () => {
-                setShowPasswordPrompt(false);
-                setPassword('');
-                setError('');
-            };
-
-            return (
-                <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-                    {/* Blur and dark overlay for contrast */}
-                    <div className="fixed inset-0 backdrop-blur-sm bg-black/50 z-0"></div>
-                    
-                    {/* Main content */}
-                    <div className="relative z-10 flex flex-col items-center">
-                        {/* Spinning coin */}
-                        <button
-                            onClick={handleCoinClick}
-                            className="relative group cursor-pointer focus:outline-none"
-                            aria-label="Access Cultural Currency"
-                        >
-                            <div className="relative w-64 h-64 transform-gpu transition-transform duration-300 hover:scale-105">
-                                {/* Coin with 3D spinning effect */}
-                                <div className="absolute inset-0 rounded-full animate-spin-slow perspective-1000">
-                                    <div className="relative w-full h-full transform-style-3d">
-                                        {/* Front of coin */}
-                                        <div className="absolute inset-0 rounded-full bg-gradient-radial shadow-2xl flex items-center justify-center backface-hidden coin-texture">
-                                            {/* Outer ring - reeded edge effect */}
-                                            <div className="absolute inset-0 rounded-full border-8 border-amber-600 shadow-inner"></div>
-                                            <div className="absolute inset-2 rounded-full border-2 border-amber-400/50"></div>
-                                            
-                                            {/* Inner content area with embossed look */}
-                                            <div className="relative text-center px-8 z-10">
-                                                <div className="text-3xl font-bold text-amber-950 leading-tight tracking-widest uppercase coin-text-shadow">
-                                                    CULTURAL
-                                                </div>
-                                                <div className="text-3xl font-bold text-amber-950 leading-tight tracking-widest uppercase coin-text-shadow">
-                                                    CURRENCY
-                                                </div>
-                                            </div>
-                                            
-                                            {/* Embossed highlight effect */}
-                                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-yellow-200/30 via-transparent to-transparent pointer-events-none"></div>
-                                            
-                                            {/* Shadow effect for depth */}
-                                            <div className="absolute inset-0 rounded-full bg-gradient-to-tl from-amber-950/40 via-transparent to-transparent pointer-events-none"></div>
-                                        </div>
-                                        
-                                        {/* Edge shine effect */}
-                                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-yellow-100/60 to-transparent opacity-50 animate-shimmer"></div>
-                                    </div>
-                                </div>
-                                
-                                {/* Glow effect on hover */}
-                                <div className="absolute inset-0 rounded-full bg-amber-400/20 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            </div>
-                        </button>
-                        
-                        {/* Subtitle */}
-                        <p className="mt-8 text-amber-200/60 text-sm tracking-widest uppercase">
-                            Click to enter
-                        </p>
-                    </div>
-
-                    {/* Password prompt modal */}
-                    {showPasswordPrompt && (
-                        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
-                            <div className="bg-gradient-to-br from-amber-950 to-black border border-amber-700/50 rounded-lg p-8 max-w-md w-full mx-4 shadow-2xl animate-slideUp">
-                                <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-2xl font-bold text-amber-400">Enter Password</h2>
-                                    <button
-                                        onClick={handleClose}
-                                        className="text-amber-400 hover:text-amber-300 transition-colors"
-                                        aria-label="Close"
-                                    >
-                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                
-                                <div>
-                                    <input
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        onKeyPress={handleKeyPress}
-                                        placeholder="Password"
-                                        className="w-full px-4 py-3 bg-black/50 border border-amber-700/50 rounded text-amber-100 placeholder-amber-800 focus:outline-none focus:border-amber-500 transition-colors"
-                                        autoFocus
-                                    />
-                                    
-                                    {error && (
-                                        <p className="mt-2 text-red-400 text-sm">{error}</p>
-                                    )}
-                                    
-                                    <button
-                                        onClick={handleSubmit}
-                                        className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 text-amber-950 font-bold rounded hover:from-yellow-400 hover:to-amber-500 transition-all duration-300 transform hover:scale-105"
-                                    >
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<CulturalCurrencyLanding />);
-    </script>
 </body>
 </html>
