@@ -151,6 +151,29 @@
         pointer-events: none;
         z-index: 1;
     }
+
+        .share-container {
+            margin-top: 20px;
+    }
+        .share-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        .share-btn:hover {
+            border-color: white;
+        }
+        #copy-status {
+            display: none;
+            font-size: 0.7rem;
+            color: #00ff00; /* Subtle green for success */
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -180,7 +203,41 @@
             <a href="https://open.spotify.com/user/1264699547"><i class="fab fa-spotify"></i></a>
             <a href="https://www.instagram.com/culturalcurrencypresents/"><i class="fab fa-instagram"></i></a>
         </div>
+
+        <div class="share-container">
+            <button id="share-btn" class="share-btn">
+                <i class="fas fa-share-nodes"></i> Share this page
+            </button>
+            <span id="copy-status">Copied!</span>
+        </div>
     </div>
 
+        const shareBtn = document.getElementById('share-btn');
+        const status = document.getElementById('copy-status');
+    
+        shareBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: 'Cultural Currency',
+                text: 'B-Sides & Deep Cuts Collective.',
+                url: 'https://culturalcurrency.vip'
+            };
+        
+            // Check if the browser supports native sharing (mostly mobile)
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.log('Error sharing:', err);
+                }
+            } else {
+                // Fallback: Copy to clipboard for desktop
+                navigator.clipboard.writeText(shareData.url).then(() => {
+                    status.style.display = 'inline';
+                    setTimeout(() => {
+                        status.style.display = 'none';
+                    }, 2000);
+                });
+            }
+        });
 </body>
 </html>
