@@ -211,7 +211,7 @@
         <div class="btn-list">
             <a href="https://open.spotify.com/playlist/58SeJSxjo0Fr0PFCVsskxu" class="btn">Spotify Playlists</a>
             <a href="#" class="btn">Next Party RSVP</a>
-            <a href="#" class="btn">Contact Us</a>
+            <a href="mailto:culturalcurrencypresents@gmail.com" class="btn">Contact Us</a>
         </div>
 
         <div class="signup-section">
@@ -220,7 +220,7 @@
                 <input type="hidden" name="_next" value="https://culturalcurrency.vip/thanks.html">
                 <input type="text" name="_gotcha" style="display:none">
                 <input type="email" name="email" placeholder="email@example.com" required>
-                <button type="submit">SUBMIT</button>
+                <button type="submit">JOIN</button>
             </form>
         </div>
 
@@ -237,32 +237,13 @@
         </div>
     </div>
 
-        const shareBtn = document.getElementById('share-btn');
-        const status = document.getElementById('copy-status');
-    
-        shareBtn.addEventListener('click', async () => {
-            const shareData = {
-                title: 'Cultural Currency',
-                text: 'B-Sides & Deep Cuts Collective.',
-                url: 'https://culturalcurrency.vip'
-            };
-        
-            // Check if the browser supports native sharing (mostly mobile)
-            if (navigator.share) {
-                try {
-                    await navigator.share(shareData);
-                } catch (err) {
-                    console.log('Error sharing:', err);
-                }
-            } else {
-                // Fallback: Copy to clipboard for desktop
-                navigator.clipboard.writeText(shareData.url).then(() => {
-                    status.style.display = 'inline';
-                    setTimeout(() => {
-                        status.style.display = 'none';
-                    }, 2000);
-                });
-            }
+        <script>
+        // Share Functionality
+        document.getElementById('share-btn').addEventListener('click', async () => {
+            const data = { title: 'Cultural Currency', url: window.location.href };
+            if (navigator.share) { await navigator.share(data); } 
+            else { navigator.clipboard.writeText(data.url); alert('Link copied!'); }
         });
+    </script>
 </body>
 </html>
