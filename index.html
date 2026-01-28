@@ -231,6 +231,33 @@
             color: #00ff00; /* Subtle green for success */
             margin-left: 10px;
         }
+
+        /* Spinner Container */
+        .loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        
+        /* The Spinner itself */
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--text-white);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 10px;
+        }
+        
+        .loader-text {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -247,10 +274,11 @@
         <p>B-Sides & Deep Cuts Collective</p>
 
         <div class="btn-list">
-            <a href="https://open.spotify.com/playlist/58SeJSxjo0Fr0PFCVsskxu" class="btn">Spotify Playlists</a>
-            <a href="https://posh.vip/g/cultural-currency" class="btn">Next Party RSVP</a>
-            <a href="mailto:culturalcurrencypresents@gmail.com" class="btn">Contact Us</a>
+            <div id="loader" class="loader-container">
+                <div class="spinner"></div>
+                <div class="loader-text">Fetching Links...</div>
         </div>
+</div>
 
         <div class="signup-section">
             <h3>Join the Guestlist</h3>
@@ -282,6 +310,47 @@
             if (navigator.share) { await navigator.share(data); } 
             else { navigator.clipboard.writeText(data.url); alert('Link copied!'); }
         });
+    </script>
+        // Replace these with your actual details
+        const SHEET_ID = '1PXV3fC2ZSlcOy-rKQoHku54ozi7vKKmwC4j9Z0V773U';
+        const SHEET_NAME = 'Sheet1'; 
+        const API_KEY = 'AIzaSyCxeUeuIqB43vzJRrW3gt8tH5xiil5MxSs'; // You'll get this from Google Cloud Console
+        
+        async function loadLinks() {
+    const container = document.querySelector('.btn-list');
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A2:C?key=${API_KEY}`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const rows = data.values;
+
+        // Clear the loader once data arrives
+        container.innerHTML = ''; 
+
+        if (rows && rows.length > 0) {
+            rows.forEach(row => {
+                const name = row[0];
+                const link = row[1];
+                const icon = row[2] || 'fa-link';
+
+                // This automatically picks 'fab' for brands and 'fas' for standard icons
+const iconPrefix = icon.includes('spotify') || icon.includes('instagram') || icon.includes('soundcloud') ? 'fab' : 'fas';
+
+const buttonHtml = `
+    <a href="${link}" class="btn" target="_blank">
+        <i class="${iconPrefix} ${icon}"></i> ${name}
+    </a>
+`;
+                container.insertAdjacentHTML('beforeend', buttonHtml);
+            });
+        }
+    } catch (error) {
+        // If it fails, show a manual contact link
+        container.innerHTML = '<p class="tagline">Unable to load links. Check back soon.</p>';
+        console.error('Error:', error);
+    }
+}   
     </script>
 </body>
 </html>
