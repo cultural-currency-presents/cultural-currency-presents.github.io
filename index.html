@@ -82,6 +82,38 @@
         h1 { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; }
         p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 30px; }
 
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Keeps it behind everything */
+            overflow: hidden;
+        }
+        
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        
+        /* The Overlay: Adjust opacity (0.6) to make text pop */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); 
+        }
+
         /* Link Buttons */
         .btn-list { display: flex; flex-direction: column; gap: 16px; }
         .btn {
@@ -202,7 +234,13 @@
     </style>
 </head>
 <body>
-
+    <div class="video-background">
+    <video autoplay muted loop playsinline poster="fallback-image.jpg">
+        <source src="Videos/background.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+    </div>
+    
     <div class="wrapper">
         <img src="Images/ccp-logo-transparent.png" alt="Cultural Currency" class="logo">
         <h1>Cultural Currency</h1>
@@ -210,7 +248,7 @@
 
         <div class="btn-list">
             <a href="https://open.spotify.com/playlist/58SeJSxjo0Fr0PFCVsskxu" class="btn">Spotify Playlists</a>
-            <a href="#" class="btn">Next Party RSVP</a>
+            <a href="https://posh.vip/g/cultural-currency" class="btn">Next Party RSVP</a>
             <a href="mailto:culturalcurrencypresents@gmail.com" class="btn">Contact Us</a>
         </div>
 
