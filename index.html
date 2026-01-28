@@ -310,47 +310,67 @@
             if (navigator.share) { await navigator.share(data); } 
             else { navigator.clipboard.writeText(data.url); alert('Link copied!'); }
         });
-    </script>
+        </script>
+
+        <script>
         // Replace these with your actual details
         const SHEET_ID = '1PXV3fC2ZSlcOy-rKQoHku54ozi7vKKmwC4j9Z0V773U';
         const SHEET_NAME = 'Sheet1'; 
         const API_KEY = 'AIzaSyCxeUeuIqB43vzJRrW3gt8tH5xiil5MxSs'; // You'll get this from Google Cloud Console
         
         async function loadLinks() {
-    const container = document.querySelector('.btn-list');
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A2:C?key=${API_KEY}`;
-    
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const rows = data.values;
-
-        // Clear the loader once data arrives
-        container.innerHTML = ''; 
-
-        if (rows && rows.length > 0) {
-            rows.forEach(row => {
-                const name = row[0];
-                const link = row[1];
-                const icon = row[2] || 'fa-link';
-
-                // This automatically picks 'fab' for brands and 'fas' for standard icons
-const iconPrefix = icon.includes('spotify') || icon.includes('instagram') || icon.includes('soundcloud') ? 'fab' : 'fas';
-
-const buttonHtml = `
-    <a href="${link}" class="btn" target="_blank">
-        <i class="${iconPrefix} ${icon}"></i> ${name}
-    </a>
-`;
-                container.insertAdjacentHTML('beforeend', buttonHtml);
-            });
+        const container = document.querySelector('.btn-list');
+        
+        // Check if configuration is missing
+        if (SHEET_ID.includes('YOUR') || API_KEY.includes('YOUR')) {
+            container.innerHTML = '<p class="tagline" style="color:#ff4d4d;">Error: API Configuration Missing.</p>';
+            return;
         }
-    } catch (error) {
-        // If it fails, show a manual contact link
-        container.innerHTML = '<p class="tagline">Unable to load links. Check back soon.</p>';
-        console.error('Error:', error);
-    }
-}   
-    </script>
+    
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A2:C?key=${API_KEY}`;
+        
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+    
+            if (data.error) {
+                console.error('Google API Error:', data.error.message);
+                container.innerHTML = `<p class="tagline">Setup Error: ${data.error.status}</p>`;
+                return;
+            }
+    
+            const rows = data.values;
+            container.innerHTML = ''; // Clear the loader
+    
+            if (rows && rows.length > 0) {
+                        rows.forEach(row => {
+                            const name = row[0];
+                            const link = row[1];
+                            const icon = (row[2] || 'fa-link').toLowerCase();
+                            
+                            // Smart Brand Detection: Automatically picks 'fab' for brand logos
+                            const brandIcons = ['spotify', 'instagram', 'soundcloud', 'facebook', 'twitter', 'apple', 'mixcloud', 'youtube'];
+                            const isBrand = brandIcons.some(brand => icon.includes(brand));
+                            const prefix = isBrand ? 'fab' : 'fas';
+            
+                            const buttonHtml = `
+                                <a href="${link}" class="btn" target="_blank" rel="noopener">
+                                    <i class="${prefix} ${icon}"></i> ${name}
+                                </a>
+                            `;
+                            container.insertAdjacentHTML('beforeend', buttonHtml);
+                        });
+                    } else {
+                        container.innerHTML = '<p class="tagline">No active links found.</p>';
+                    }
+                } catch (error) {
+                    console.error('Network Error:', error);
+                    container.innerHTML = '<p class="tagline">Failed to connect to Guestlist database.</p>';
+                }
+            }
+            
+            // Fire the function
+            loadLinks();
+            </script>
 </body>
 </html>
